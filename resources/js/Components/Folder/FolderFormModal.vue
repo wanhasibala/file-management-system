@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import { watch } from 'vue';
+import { watch, computed } from 'vue';
 import Modal from '@/Components/UI/Modal.vue';
 import Button from '@/Components/UI/Button.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import SelectInput from '@/Components/UI/SelectInput.vue';
 import TextareaInput from '@/Components/UI/TextareaInput.vue';
+import { Folder } from 'lucide-vue-next';
 
 const props = defineProps({
     show: {
@@ -35,6 +36,11 @@ const form = useForm({
     parent_id: null,
     description: '',
     color: 'amber',
+});
+
+const selectedParentInfo = computed(() => {
+    if (!form.parent_id) return null;
+    return props.folderTree.find((f) => String(f.id) === String(form.parent_id));
 });
 
 watch(
@@ -105,9 +111,9 @@ const submit = () => {
                 <SelectInput
                     id="parent_folder"
                     v-model="form.parent_id"
-                    class="mt-1"
+                    class="mt-1 font-mono text-xs"
                 >
-                    <option :value="null">None (Root Folder)</option>
+                    <option :value="null">📁 [Root] (Root Directory - No Parent Folder)</option>
                     <option
                         v-for="item in folderTree"
                         :key="item.id"
@@ -118,7 +124,11 @@ const submit = () => {
                     </option>
                 </SelectInput>
                 <InputError :message="form.errors.parent_id" class="mt-1.5" />
-                <p class="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
+                <div v-if="selectedParentInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                    <Folder class="w-3.5 h-3.5 shrink-0" />
+                    <span class="truncate">Parent Path: {{ selectedParentInfo.path }}</span>
+                </div>
+                <p v-else class="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
                     Supports unlimited hierarchical folder nesting.
                 </p>
             </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import { watch } from 'vue';
+import { watch, computed } from 'vue';
 import Modal from '@/Components/UI/Modal.vue';
 import Button from '@/Components/UI/Button.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -9,6 +9,7 @@ import InputError from '@/Components/InputError.vue';
 import SelectInput from '@/Components/UI/SelectInput.vue';
 import TextareaInput from '@/Components/UI/TextareaInput.vue';
 import DragDropUpload from '@/Components/UI/DragDropUpload.vue';
+import { Folder } from 'lucide-vue-next';
 
 const props = defineProps({
     show: {
@@ -37,6 +38,11 @@ const form = useForm({
     folder_id: null,
     file: null,
     description: '',
+});
+
+const selectedFolderInfo = computed(() => {
+    if (!form.folder_id) return null;
+    return props.folderTree.find((f) => String(f.id) === String(form.folder_id));
 });
 
 watch(
@@ -124,13 +130,13 @@ const submit = () => {
 
                 <!-- Destination Folder -->
                 <div>
-                    <InputLabel for="destination_folder" value="Destination Folder" />
+                    <InputLabel for="destination_folder" value="Destination Folder (Hierarchy)" />
                     <SelectInput
                         id="destination_folder"
                         v-model="form.folder_id"
-                        class="mt-1"
+                        class="mt-1 font-mono text-xs"
                     >
-                        <option :value="null">Root Directory (No folder)</option>
+                        <option :value="null">📁 [Root] (Root Directory - No Parent Folder)</option>
                         <option
                             v-for="item in folderTree"
                             :key="item.id"
@@ -140,6 +146,10 @@ const submit = () => {
                         </option>
                     </SelectInput>
                     <InputError :message="form.errors.folder_id" class="mt-1.5" />
+                    <div v-if="selectedFolderInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                        <Folder class="w-3.5 h-3.5 shrink-0" />
+                        <span class="truncate">Path: {{ selectedFolderInfo.path }}</span>
+                    </div>
                 </div>
             </div>
 

@@ -52,6 +52,14 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    departments: {
+        type: Array,
+        default: () => [],
+    },
+    folderTree: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const page = usePage();
@@ -386,13 +394,15 @@ const formatTimeAgo = (dateStr) => {
         <FileUploadModal
             v-if="isAdmin"
             :show="showUploadModal"
-            :departments="departmentBreakdown"
+            :departments="departments.length > 0 ? departments : departmentBreakdown"
+            :folder-tree="folderTree"
             @close="showUploadModal = false"
         />
 
         <FolderFormModal
             v-if="isAdmin"
             :show="showFolderModal"
+            :folder-tree="folderTree"
             @close="showFolderModal = false"
         />
     </AuthenticatedLayout>

@@ -29,39 +29,48 @@ class FolderService
      */
     public function getFolderTree(?int $excludeId = null): array
     {
-        $query = Folder::whereNull('parent_id')->with(['children' => function ($q) {
-            $q->orderBy('name');
-        }])->orderBy('name');
+        $allFolders = Folder::orderBy('name')->get();
+        $grouped = $allFolders->groupBy('parent_id');
 
-        if ($excludeId) {
-            $query->where('id', '!=', $excludeId);
-        }
-
-        $folders = $query->get();
-
-        return $this->formatTree($folders, $excludeId);
+        return $this->buildTreeHierarchy($grouped, null, $excludeId, '', 0);
     }
 
-    private function formatTree(Collection $folders, ?int $excludeId = null, string $prefix = ''): array
+    /**
+     * Recursively build hierarchical folder tree.
+     */
+    private function buildTreeHierarchy($grouped, $parentId = null, ?int $excludeId = null, string $parentPath = '', int $level = 0): array
     {
         $result = [];
 
-        foreach ($folders as $folder) {
-            if ($excludeId && $folder->id === $excludeId) {
+        if (! isset($grouped[$parentId])) {
+            return $result;
+        }
+
+        foreach ($grouped[$parentId] as $folder) {
+            if ($excludeId && (int) $folder->id === (int) $excludeId) {
                 continue;
             }
+
+            $currentPath = $parentPath ? "{$parentPath} / {$folder->name}" : $folder->name;
+            
+            // Indentation for hierarchical display
+            $indent = str_repeat('    ', $level);
+            $treePrefix = $level > 0 ? "{$indent}└─ " : '';
+            $visualLabel = $treePrefix . "📁 " . $folder->name;
 
             $result[] = [
                 'id' => $folder->id,
                 'name' => $folder->name,
-                'label' => $prefix ? "{$prefix} / {$folder->name}" : $folder->name,
                 'parent_id' => $folder->parent_id,
+                'level' => $level,
+                'path' => $currentPath,
+                'label' => $visualLabel,
+                'full_label' => $currentPath,
             ];
 
-            if ($folder->children->isNotEmpty()) {
-                $subPrefix = $prefix ? "{$prefix} / {$folder->name}" : $folder->name;
-                $result = array_merge($result, $this->formatTree($folder->children, $excludeId, $subPrefix));
-            }
+            // Recursively process child folders
+            $children = $this->buildTreeHierarchy($grouped, $folder->id, $excludeId, $currentPath, $level + 1);
+            $result = array_merge($result, $children);
         }
 
         return $result;
