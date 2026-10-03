@@ -103,26 +103,26 @@ const removeFile = () => {
             @dragleave="onDragLeave"
             @drop="onDrop"
             @click="triggerBrowse"
-            class="relative border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all duration-200 group"
+            class="relative border-2 border-dashed rounded-3xl p-6 sm:p-8 text-center cursor-pointer transition-all duration-300 group"
             :class="[
                 isDragging
-                    ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30'
-                    : 'border-gray-300 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 bg-gray-50/50 dark:bg-gray-800/40 hover:bg-white dark:hover:bg-gray-800'
+                    ? 'border-red-500 bg-red-50/60 dark:bg-red-950/30 scale-[1.01]'
+                    : 'border-gray-300 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 bg-gray-50/60 dark:bg-gray-800/40 hover:bg-red-50/20 dark:hover:bg-gray-800'
             ]"
         >
             <div class="flex flex-col items-center justify-center space-y-3">
                 <div
-                    class="p-3.5 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 group-hover:scale-110 transition-transform"
+                    class="p-4 rounded-2xl bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-400 group-hover:scale-110 shadow-xs transition-transform"
                 >
-                    <UploadCloud class="w-7 h-7" />
+                    <UploadCloud class="w-8 h-8" />
                 </div>
 
                 <div class="space-y-1 text-center">
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                        <span class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Click to upload</span> or drag and drop
+                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                        <span class="text-red-600 dark:text-red-400 hover:underline">Pilih berkas dokumen</span> atau tarik & lepas di sini
                     </p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                        PDF, DOCX, XLSX, Images, or Text (Max {{ maxSizeMb }}MB)
+                        Format PDF, DOCX, XLSX, Gambar, atau ZIP (Maksimal {{ maxSizeMb }}MB)
                     </p>
                 </div>
             </div>
@@ -131,30 +131,31 @@ const removeFile = () => {
         <!-- Selected File Preview Card -->
         <div
             v-else
-            class="flex items-center justify-between p-4 bg-blue-50/60 dark:bg-gray-800 rounded-xl border border-blue-200 dark:border-gray-700"
+            class="flex items-center justify-between p-4 bg-red-50/50 dark:bg-gray-800 rounded-2xl border border-red-200 dark:border-gray-700 shadow-xs"
         >
-            <div class="flex items-center gap-3 overflow-hidden">
-                <div class="p-2.5 bg-blue-600 text-white rounded-lg shrink-0">
+            <div class="flex items-center gap-3.5 overflow-hidden">
+                <div class="p-3 bg-gradient-to-br from-red-600 to-rose-600 text-white rounded-xl shadow-xs shrink-0">
                     <FileIcon class="w-5 h-5" />
                 </div>
                 <div class="overflow-hidden">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    <p class="text-sm font-bold text-gray-900 dark:text-white truncate">
                         {{ selectedFile.name }}
                     </p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                    <p class="text-xs text-gray-500 dark:text-gray-400 font-mono">
                         {{ formattedSize }}
                     </p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <span class="flex items-center gap-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 mr-2">
-                    <CheckCircle class="w-4 h-4" /> Ready
+                <span class="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800 mr-1">
+                    <CheckCircle class="w-3.5 h-3.5" /> Siap Diunggah
                 </span>
                 <button
                     type="button"
                     @click="removeFile"
-                    class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                    class="p-2 text-gray-400 hover:text-red-600 rounded-xl hover:bg-white dark:hover:bg-gray-700 transition-colors"
+                    title="Ganti Berkas"
                 >
                     <X class="w-4 h-4" />
                 </button>

@@ -19,6 +19,8 @@ const props = defineProps({
 
 const colorClasses = computed(() => {
     switch (props.variant) {
+        case 'lion':
+            return 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/60 dark:text-red-300 dark:border-red-900/60';
         case 'indigo':
             return 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950/50 dark:text-indigo-300 dark:border-indigo-800';
         case 'emerald':
@@ -45,6 +47,7 @@ const colorClasses = computed(() => {
 
 const dotColorClasses = computed(() => {
     switch (props.variant) {
+        case 'lion': return 'bg-red-600 animate-pulse';
         case 'indigo': return 'bg-indigo-500';
         case 'emerald':
         case 'green': return 'bg-emerald-500';

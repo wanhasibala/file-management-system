@@ -38,21 +38,23 @@ const props = defineProps({
 const variantClasses = computed(() => {
     switch (props.variant) {
         case 'primary':
-            return 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm border border-transparent focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-500';
+            return 'bg-gradient-to-r from-red-600 via-rose-600 to-red-600 hover:from-red-700 hover:via-rose-700 hover:to-red-700 text-white shadow-sm shadow-red-500/25 border border-transparent focus:ring-red-500 dark:shadow-red-950/50';
+        case 'lion':
+            return 'bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 hover:from-red-700 hover:to-amber-700 text-white shadow-md shadow-red-500/30 border border-transparent focus:ring-red-500';
         case 'secondary':
-            return 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 shadow-sm focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700';
+            return 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200/90 shadow-xs focus:ring-red-500 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-750';
         case 'danger':
-            return 'bg-red-600 hover:bg-red-700 text-white shadow-sm border border-transparent focus:ring-red-500 dark:bg-red-600 dark:hover:bg-red-500';
+            return 'bg-red-600 hover:bg-red-700 text-white shadow-sm shadow-red-600/20 border border-transparent focus:ring-red-500 dark:bg-red-600 dark:hover:bg-red-500';
         case 'warning':
-            return 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm border border-transparent focus:ring-amber-500 dark:bg-amber-600 dark:hover:bg-amber-500';
+            return 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm shadow-amber-500/20 border border-transparent focus:ring-amber-500 dark:bg-amber-600 dark:hover:bg-amber-500';
         case 'success':
-            return 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm border border-transparent focus:ring-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500';
+            return 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shadow-emerald-600/20 border border-transparent focus:ring-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500';
         case 'outline':
-            return 'bg-transparent hover:bg-blue-50 text-blue-600 border border-blue-600 focus:ring-blue-500 dark:text-blue-400 dark:border-blue-400 dark:hover:bg-blue-950/40';
+            return 'bg-transparent hover:bg-red-50 text-red-600 border border-red-500/80 focus:ring-red-500 dark:text-red-400 dark:border-red-500/60 dark:hover:bg-red-950/30';
         case 'ghost':
             return 'bg-transparent hover:bg-gray-100 text-gray-700 border border-transparent focus:ring-gray-400 dark:text-gray-300 dark:hover:bg-gray-800';
         default:
-            return 'bg-blue-600 text-white';
+            return 'bg-red-600 text-white';
     }
 });
 

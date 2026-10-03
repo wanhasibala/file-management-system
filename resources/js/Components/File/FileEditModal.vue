@@ -91,12 +91,12 @@ const submit = () => {
 
             <!-- Title -->
             <div>
-                <InputLabel for="edit_title" value="Document Title *" />
+                <InputLabel for="edit_title" value="Judul Dokumen *" />
                 <TextInput
                     id="edit_title"
                     v-model="form.title"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full rounded-xl focus:border-red-500 focus:ring-red-500"
                     required
                 />
                 <InputError :message="form.errors.title" class="mt-1.5" />
@@ -105,11 +105,11 @@ const submit = () => {
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- Department -->
                 <div>
-                    <InputLabel for="edit_department" value="Department *" />
+                    <InputLabel for="edit_department" value="Departemen / Divisi *" />
                     <SelectInput
                         id="edit_department"
                         v-model="form.department_id"
-                        class="mt-1"
+                        class="mt-1 rounded-xl"
                         required
                     >
                         <option
@@ -125,13 +125,13 @@ const submit = () => {
 
                 <!-- Folder Location -->
                 <div>
-                    <InputLabel for="edit_folder" value="Folder Location (Hierarchy)" />
+                    <InputLabel for="edit_folder" value="Lokasi Folder (Hierarki)" />
                     <SelectInput
                         id="edit_folder"
                         v-model="form.folder_id"
-                        class="mt-1 font-mono text-xs"
+                        class="mt-1 font-mono text-xs rounded-xl"
                     >
-                        <option :value="null">📁 [Root] (Root Directory - No Parent Folder)</option>
+                        <option :value="null">📁 [Root] (Direktori Utama / Tanpa Folder)</option>
                         <option
                             v-for="item in folderTree"
                             :key="item.id"
@@ -141,7 +141,7 @@ const submit = () => {
                         </option>
                     </SelectInput>
                     <InputError :message="form.errors.folder_id" class="mt-1.5" />
-                    <div v-if="selectedFolderInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                    <div v-if="selectedFolderInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-red-600 dark:text-red-400 font-medium">
                         <Folder class="w-3.5 h-3.5 shrink-0" />
                         <span class="truncate">Path: {{ selectedFolderInfo.path }}</span>
                     </div>
@@ -150,21 +150,22 @@ const submit = () => {
 
             <!-- Description -->
             <div>
-                <InputLabel for="edit_description" value="Description / Notes" />
+                <InputLabel for="edit_description" value="Keterangan / Catatan Dokumen" />
                 <TextareaInput
                     id="edit_description"
                     v-model="form.description"
-                    class="mt-1"
+                    class="mt-1 rounded-xl"
                     rows="2"
+                    placeholder="Catatan versi atau revisi dokumen..."
                 />
                 <InputError :message="form.errors.description" class="mt-1.5" />
             </div>
 
             <!-- Replace File (Optional) -->
             <div>
-                <InputLabel value="Replace File Binary (Optional)" />
+                <InputLabel value="Ganti Berkas File (Opsional)" />
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-1.5">
-                    Leave empty to keep current file binary. Uploading a new file will replace the existing one.
+                    Biarkan kosong jika tetap menggunakan file yang sekarang. Mengunggah file baru akan menggantikan fisik berkas lama.
                 </p>
                 <DragDropUpload
                     v-model="form.file"
@@ -175,10 +176,10 @@ const submit = () => {
             <!-- Actions -->
             <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-gray-800">
                 <Button variant="secondary" :disabled="form.processing" @click="$emit('close')">
-                    Cancel
+                    Batal
                 </Button>
                 <Button type="submit" variant="primary" :loading="form.processing">
-                    Save Changes
+                    Simpan Perubahan
                 </Button>
             </div>
         </form>

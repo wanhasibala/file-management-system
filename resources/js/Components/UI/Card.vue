@@ -13,9 +13,9 @@ defineProps({
 
 <template>
     <div
-        class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700/80 shadow-xs overflow-hidden transition-all duration-200"
+        class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200/80 dark:border-gray-700/80 shadow-xs overflow-hidden transition-all duration-300"
         :class="{
-            'hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600': hoverable,
+            'hover:shadow-lg hover:border-gray-300 dark:hover:border-gray-600 hover:-translate-y-0.5': hoverable,
         }"
     >
         <div

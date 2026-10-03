@@ -88,17 +88,17 @@ const submit = () => {
 </script>
 
 <template>
-    <Modal :show="show" max-width="lg" :title="folder ? 'Edit Folder' : 'Create New Folder'" @close="$emit('close')">
+    <Modal :show="show" max-width="lg" :title="folder ? 'Ubah Informasi Folder' : 'Buat Folder Baru'" @close="$emit('close')">
         <form @submit.prevent="submit" class="space-y-4">
             <!-- Folder Name -->
             <div>
-                <InputLabel for="folder_name" value="Folder Name *" />
+                <InputLabel for="folder_name" value="Nama Folder *" />
                 <TextInput
                     id="folder_name"
                     v-model="form.name"
                     type="text"
-                    class="mt-1 block w-full"
-                    placeholder="e.g. Operations Manuals, Annual Reports"
+                    class="mt-1 block w-full rounded-xl focus:border-red-500 focus:ring-red-500"
+                    placeholder="Contoh: Dokumen Operasional Penerbangan 2026"
                     autofocus
                     required
                 />
@@ -107,13 +107,13 @@ const submit = () => {
 
             <!-- Parent Folder Selector (Hierarchical) -->
             <div>
-                <InputLabel for="parent_folder" value="Parent Folder (Hierarchical)" />
+                <InputLabel for="parent_folder" value="Induk Folder / Parent (Hierarki)" />
                 <SelectInput
                     id="parent_folder"
                     v-model="form.parent_id"
-                    class="mt-1 font-mono text-xs"
+                    class="mt-1 font-mono text-xs rounded-xl"
                 >
-                    <option :value="null">📁 [Root] (Root Directory - No Parent Folder)</option>
+                    <option :value="null">📁 [Root] (Direktori Utama / Tanpa Induk)</option>
                     <option
                         v-for="item in folderTree"
                         :key="item.id"
@@ -124,31 +124,31 @@ const submit = () => {
                     </option>
                 </SelectInput>
                 <InputError :message="form.errors.parent_id" class="mt-1.5" />
-                <div v-if="selectedParentInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                <div v-if="selectedParentInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-red-600 dark:text-red-400 font-medium">
                     <Folder class="w-3.5 h-3.5 shrink-0" />
-                    <span class="truncate">Parent Path: {{ selectedParentInfo.path }}</span>
+                    <span class="truncate">Lokasi Parent: {{ selectedParentInfo.path }}</span>
                 </div>
                 <p v-else class="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
-                    Supports unlimited hierarchical folder nesting.
+                    Mendukung struktur hirarki folder bersarang tanpa batas kedalaman.
                 </p>
             </div>
 
             <!-- Description -->
             <div>
-                <InputLabel for="folder_description" value="Description (Optional)" />
+                <InputLabel for="folder_description" value="Keterangan / Deskripsi (Opsional)" />
                 <TextareaInput
                     id="folder_description"
                     v-model="form.description"
-                    class="mt-1"
+                    class="mt-1 rounded-xl"
                     rows="2"
-                    placeholder="Brief description of documents stored in this folder"
+                    placeholder="Penjelasan singkat mengenai berkas yang disimpan pada folder ini..."
                 />
                 <InputError :message="form.errors.description" class="mt-1.5" />
             </div>
 
             <!-- Color Palette Selector -->
             <div>
-                <InputLabel value="Folder Color Tag" />
+                <InputLabel value="Label Warna Folder" />
                 <div class="mt-2 flex items-center gap-2.5">
                     <button
                         v-for="c in colors"
@@ -158,7 +158,7 @@ const submit = () => {
                         class="w-7 h-7 rounded-full transition-transform"
                         :class="[
                             c.class,
-                            form.color === c.name ? 'ring-2 ring-offset-2 ring-blue-500 scale-110' : 'hover:scale-105 opacity-80 hover:opacity-100'
+                            form.color === c.name ? 'ring-2 ring-offset-2 ring-red-500 scale-110 shadow-xs' : 'hover:scale-105 opacity-80 hover:opacity-100'
                         ]"
                     />
                 </div>
@@ -167,10 +167,10 @@ const submit = () => {
             <!-- Actions -->
             <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-gray-800">
                 <Button variant="secondary" :disabled="form.processing" @click="$emit('close')">
-                    Cancel
+                    Batal
                 </Button>
                 <Button type="submit" variant="primary" :loading="form.processing">
-                    {{ folder ? 'Save Changes' : 'Create Folder' }}
+                    {{ folder ? 'Simpan Perubahan' : 'Buat Folder' }}
                 </Button>
             </div>
         </form>

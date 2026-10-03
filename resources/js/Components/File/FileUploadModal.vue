@@ -79,11 +79,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Modal :show="show" max-width="xl" title="Upload Document" @close="$emit('close')">
+    <Modal :show="show" max-width="xl" title="Unggah Dokumen Baru" @close="$emit('close')">
         <form @submit.prevent="submit" class="space-y-4">
             <!-- Drag and Drop File Upload -->
             <div>
-                <InputLabel value="Upload File *" />
+                <InputLabel value="Pilih Berkas File *" />
                 <DragDropUpload
                     v-model="form.file"
                     :error="form.errors.file"
@@ -94,13 +94,13 @@ const submit = () => {
 
             <!-- Title -->
             <div>
-                <InputLabel for="file_title" value="Document Title *" />
+                <InputLabel for="file_title" value="Judul Dokumen *" />
                 <TextInput
                     id="file_title"
                     v-model="form.title"
                     type="text"
-                    class="mt-1 block w-full"
-                    placeholder="e.g. Flight Safety Checklist SOP 2026"
+                    class="mt-1 block w-full rounded-xl focus:border-red-500 focus:ring-red-500"
+                    placeholder="Contoh: SOP Keselamatan Penerbangan 2026"
                     required
                 />
                 <InputError :message="form.errors.title" class="mt-1.5" />
@@ -109,14 +109,14 @@ const submit = () => {
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- Department (Mandatory) -->
                 <div>
-                    <InputLabel for="file_department" value="Department *" />
+                    <InputLabel for="file_department" value="Departemen / Divisi *" />
                     <SelectInput
                         id="file_department"
                         v-model="form.department_id"
-                        class="mt-1"
+                        class="mt-1 rounded-xl"
                         required
                     >
-                        <option value="" disabled>Select Department</option>
+                        <option value="" disabled>Pilih Departemen</option>
                         <option
                             v-for="dept in departments"
                             :key="dept.id"
@@ -130,13 +130,13 @@ const submit = () => {
 
                 <!-- Destination Folder -->
                 <div>
-                    <InputLabel for="destination_folder" value="Destination Folder (Hierarchy)" />
+                    <InputLabel for="destination_folder" value="Folder Tujuan (Hierarki)" />
                     <SelectInput
                         id="destination_folder"
                         v-model="form.folder_id"
-                        class="mt-1 font-mono text-xs"
+                        class="mt-1 font-mono text-xs rounded-xl"
                     >
-                        <option :value="null">📁 [Root] (Root Directory - No Parent Folder)</option>
+                        <option :value="null">📁 [Root] (Direktori Utama / Tanpa Folder)</option>
                         <option
                             v-for="item in folderTree"
                             :key="item.id"
@@ -146,7 +146,7 @@ const submit = () => {
                         </option>
                     </SelectInput>
                     <InputError :message="form.errors.folder_id" class="mt-1.5" />
-                    <div v-if="selectedFolderInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-400 font-medium">
+                    <div v-if="selectedFolderInfo" class="mt-1.5 flex items-center gap-1.5 text-[11px] text-red-600 dark:text-red-400 font-medium">
                         <Folder class="w-3.5 h-3.5 shrink-0" />
                         <span class="truncate">Path: {{ selectedFolderInfo.path }}</span>
                     </div>
@@ -155,13 +155,13 @@ const submit = () => {
 
             <!-- Description -->
             <div>
-                <InputLabel for="file_description" value="Description / Notes (Optional)" />
+                <InputLabel for="file_description" value="Keterangan / Catatan (Opsional)" />
                 <TextareaInput
                     id="file_description"
                     v-model="form.description"
-                    class="mt-1"
+                    class="mt-1 rounded-xl"
                     rows="2"
-                    placeholder="Summary of document purpose and version details..."
+                    placeholder="Ringkasan isi dokumen, versi, atau catatan departemen..."
                 />
                 <InputError :message="form.errors.description" class="mt-1.5" />
             </div>
@@ -169,10 +169,10 @@ const submit = () => {
             <!-- Actions -->
             <div class="pt-4 flex items-center justify-end gap-3 border-t border-gray-100 dark:border-gray-800">
                 <Button variant="secondary" :disabled="form.processing" @click="$emit('close')">
-                    Cancel
+                    Batal
                 </Button>
                 <Button type="submit" variant="primary" :loading="form.processing" :disabled="!form.file">
-                    Upload Document
+                    Unggah Dokumen
                 </Button>
             </div>
         </form>
