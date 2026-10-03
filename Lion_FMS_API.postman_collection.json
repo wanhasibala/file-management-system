@@ -1,0 +1,191 @@
+{
+  "info": {
+    "_postman_id": "893d5084-2ea0-4f95-9262-111111111111",
+    "name": "Lion Group - File Management System (FMS) API",
+    "description": "Postman collection for testing RESTful endpoints of File Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Stats & Latest Files",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "dashboard"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Folders",
+      "item": [
+        {
+          "name": "List Root Folders & Tree",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/folders", "host": ["{{base_url}}"], "path": ["api", "v1", "folders"] }
+          }
+        },
+        {
+          "name": "Get Folder Details & Contents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/folders/1", "host": ["{{base_url}}"], "path": ["api", "v1", "folders", "1"] }
+          }
+        },
+        {
+          "name": "Create Folder (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Engineering Manuals\",\n  \"parent_id\": null,\n  \"description\": \"Aircraft technical maintenance manuals\",\n  \"color\": \"sky\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/v1/folders", "host": ["{{base_url}}"], "path": ["api", "v1", "folders"] }
+          }
+        },
+        {
+          "name": "Update / Rename Folder (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Engineering & Maintenance Manuals\",\n  \"parent_id\": null,\n  \"color\": \"blue\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/v1/folders/1", "host": ["{{base_url}}"], "path": ["api", "v1", "folders", "1"] }
+          }
+        },
+        {
+          "name": "Delete Folder (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/folders/1", "host": ["{{base_url}}"], "path": ["api", "v1", "folders", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Files & Documents",
+      "item": [
+        {
+          "name": "Search & Filter Files",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/files?search=report&department_id=1&type=pdf&sort_by=created_at&sort_order=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "files"],
+              "query": [
+                { "key": "search", "value": "report" },
+                { "key": "department_id", "value": "1" },
+                { "key": "type", "value": "pdf" },
+                { "key": "sort_by", "value": "created_at" },
+                { "key": "sort_order", "value": "desc" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get File Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/files/1", "host": ["{{base_url}}"], "path": ["api", "v1", "files", "1"] }
+          }
+        },
+        {
+          "name": "Download File",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/v1/files/1/download", "host": ["{{base_url}}"], "path": ["api", "v1", "files", "1", "download"] }
+          }
+        },
+        {
+          "name": "Preview File (Inline Stream)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/v1/files/1/preview", "host": ["{{base_url}}"], "path": ["api", "v1", "files", "1", "preview"] }
+          }
+        },
+        {
+          "name": "Upload Document (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Flight Safety Report 2026", "type": "text" },
+                { "key": "department_id", "value": "1", "type": "text" },
+                { "key": "folder_id", "value": "1", "type": "text" },
+                { "key": "description", "value": "Monthly safety auditing records", "type": "text" },
+                { "key": "file", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/api/v1/files", "host": ["{{base_url}}"], "path": ["api", "v1", "files"] }
+          }
+        },
+        {
+          "name": "Delete File (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/files/1", "host": ["{{base_url}}"], "path": ["api", "v1", "files", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "application/json" }],
+            "url": { "raw": "{{base_url}}/api/v1/departments", "host": ["{{base_url}}"], "path": ["api", "v1", "departments"] }
+          }
+        },
+        {
+          "name": "Create Department (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Quality Assurance\",\n  \"code\": \"QA\",\n  \"description\": \"Quality Assurance & Compliance\",\n  \"color\": \"teal\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/v1/departments", "host": ["{{base_url}}"], "path": ["api", "v1", "departments"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000" }
+  ]
+}

@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fms_lion_app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: "Lion Group - File Management System"
+      APP_ENV: local
+      APP_KEY: base64:5ruVPOhKyciZqMAldFcc36upXq3lrRXiDqpgRQTUv2g=
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: fms_lion_group
+      DB_USERNAME: postgres
+      DB_PASSWORD: secretpassword
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./storage/app/public:/var/www/storage/app/public
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: fms_lion_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: fms_lion_group
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d fms_lion_group"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local
