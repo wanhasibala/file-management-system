@@ -54,9 +54,9 @@ class FolderService
             $currentPath = $parentPath ? "{$parentPath} / {$folder->name}" : $folder->name;
             
             // Indentation for hierarchical display
-            $indent = str_repeat('    ', $level);
+            $indent = str_repeat('    ', $level);
             $treePrefix = $level > 0 ? "{$indent}└─ " : '';
-            $visualLabel = $treePrefix . "📁 " . $folder->name;
+            $visualLabel = $treePrefix . $folder->name;
 
             $result[] = [
                 'id' => $folder->id,

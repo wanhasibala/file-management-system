@@ -84,10 +84,10 @@ const openPreview = (file) => {
 // Dynamic greeting based on current local hour
 const greeting = computed(() => {
     const hour = new Date().getHours();
-    if (hour < 11) return 'Selamat Pagi ☀️';
-    if (hour < 15) return 'Selamat Siang 🌤️';
-    if (hour < 18) return 'Selamat Sore 🌇';
-    return 'Selamat Malam 🌙';
+    if (hour < 11) return 'Selamat Pagi';
+    if (hour < 15) return 'Selamat Siang';
+    if (hour < 18) return 'Selamat Sore';
+    return 'Selamat Malam';
 });
 
 const getFileIcon = (ext, mime) => {
@@ -150,11 +150,11 @@ const totalDepartmentFiles = computed(() => {
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div class="space-y-2 max-w-2xl">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-semibold text-white border border-white/20">
-                        <Sparkles class="w-3.5 h-3.5 text-amber-300 animate-spin" style="animation-duration: 4s;" />
+                        <Building2 class="w-3.5 h-3.5 text-amber-200" />
                         <span>Lion Group Document Management Center</span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                        {{ greeting }}, {{ $page.props.auth.user.name }}! 👋
+                        {{ greeting }}, {{ $page.props.auth.user.name }}
                     </h1>
                     <p class="text-sm sm:text-base text-red-50/90 leading-relaxed">
                         Sistem arsip dan pengelolaan dokumen digital terpadu Lion Group. Akses seluruh berkas departemen secara aman, cepat, dan terorganisir.

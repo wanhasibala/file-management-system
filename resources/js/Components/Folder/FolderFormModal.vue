@@ -113,7 +113,7 @@ const submit = () => {
                     v-model="form.parent_id"
                     class="mt-1 font-mono text-xs rounded-xl"
                 >
-                    <option :value="null">📁 [Root] (Direktori Utama / Tanpa Induk)</option>
+                    <option :value="null">[Root] Direktori Utama (Tanpa Induk)</option>
                     <option
                         v-for="item in folderTree"
                         :key="item.id"
